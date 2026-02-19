@@ -1,0 +1,143 @@
+{
+  "kind": "build_request",
+  "title": "Build daily todo list with passive-aggressive unchecking behavior",
+  "projectName": "Daily Todo",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a clean daily todo list interface where users can add new tasks with a text input and submit button",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "build a clean daily todo list"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Interface displays an input field for adding new tasks",
+        "Interface includes a button or enter key functionality to submit tasks",
+        "Visual design is clean and uncluttered"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Display all todo items in a list with checkboxes, where each item shows the task text and can be toggled between checked and unchecked states",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "build a clean daily todo list"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each task displays with a checkbox",
+        "Tasks can be checked and unchecked by clicking the checkbox",
+        "List updates immediately when tasks are toggled"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "When a task is checked off, display it with normal styling (e.g., strikethrough or completed state)",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "if a check a task off it behaves normally"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Checked tasks have visual indication of completion (such as strikethrough)",
+        "No special alerts or popups appear when checking a task"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "When a task is unchecked, immediately change the task text color to red",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "if i uncheck a task turn the text red"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unchecking a previously checked task changes its text to red",
+        "Red text persists until the task is checked again"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "When a task is unchecked, display a popup modal with a randomly generated passive-aggressive insult about the user's work ethic",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "make a popup with a randomly generated highly passive aggressive insult about my worht ethic"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Popup appears immediately when a task is unchecked",
+        "Popup contains a passive-aggressive message related to work ethic",
+        "Message is randomly selected from a collection of different insults",
+        "Popup can be dismissed by the user"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Store the list of todos and their checked/unchecked states in the backend so they persist across sessions",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Todos are saved to the backend when added",
+        "Todo states (checked/unchecked) are persisted when toggled",
+        "Todos are retrieved from backend on page load"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Apply a creative, coherent visual theme to the todo list interface with a distinct style including color palette, typography, and layout that is consistently enforced throughout",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Interface uses a cohesive color scheme (excluding blue and purple unless contextually appropriate)",
+        "Typography choices are consistent and readable",
+        "Layout is clean and visually appealing with good spacing"
+      ]
+    }
+  ],
+  "constraints": [
+    "Use only React, Tailwind CSS, and Shadcn components for the frontend",
+    "Backend must use Motoko with single-actor architecture",
+    "Do not modify immutable frontend paths including useInternetIdentity hooks and main.tsx"
+  ],
+  "nonGoals": [
+    "Multi-user todo lists or sharing functionality",
+    "Task categories or tags",
+    "Due dates or scheduling features",
+    "Task editing after creation",
+    "Task deletion functionality"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

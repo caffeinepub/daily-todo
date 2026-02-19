@@ -1,0 +1,9 @@
+{
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching all tasks, adding new tasks, and toggling task completion status with automatic cache invalidation.",
+  "frontend/src/components/TodoInput.tsx": "Input component with form submission that allows users to add new tasks via text input or Enter key, with loading state during submission.",
+  "frontend/src/components/TodoList.tsx": "Main list component that displays all tasks with checkboxes, tracks unchecked states to apply red text styling, and triggers the passive-aggressive modal when tasks are unchecked.",
+  "frontend/src/components/PassiveAggressiveModal.tsx": "Dialog modal that displays a randomly selected passive-aggressive message from a collection of 15 insults about work ethic when a task is unchecked.",
+  "frontend/src/App.tsx": "Main application component that renders the todo list interface with header, input section, task list, and footer with attribution link.",
+  "frontend/src/index.css": "Global styles with warm earth-tone OKLCH color system for both light and dark modes, avoiding blue and purple tones.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with custom earth-tone colors, Inter font family, and enhanced shadow utilities for a cohesive warm design system."
+}

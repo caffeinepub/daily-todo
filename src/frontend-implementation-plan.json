@@ -1,0 +1,127 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Daily Todo List with Passive-Aggressive Unchecking Behavior",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create a clean daily todo list interface where users can add new tasks with a text input and submit button",
+      "acceptanceCriteria": [
+        "Interface displays an input field for adding new tasks",
+        "Interface includes a button or enter key functionality to submit tasks",
+        "Visual design is clean and uncluttered"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/TodoInput.tsx",
+          "operation": "create",
+          "description": "Create a component that renders a text input field and submit button for adding new tasks. Support both button click and Enter key submission. Use Shadcn UI Input and Button components. On submit, call the backend addTask method and clear the input field."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import and render the TodoInput component within the main application layout. Position it at the top of the todo list interface."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Display all todo items in a list with checkboxes, where each item shows the task text and can be toggled between checked and unchecked states",
+      "acceptanceCriteria": [
+        "Each task displays with a checkbox",
+        "Tasks can be checked and unchecked by clicking the checkbox",
+        "List updates immediately when tasks are toggled"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/TodoList.tsx",
+          "operation": "create",
+          "description": "Create a component that fetches all tasks from the backend using getAllTasks on mount and renders them in a list. Each task displays with a Shadcn UI Checkbox component and the task text. Wire checkbox onChange events to call the backend toggleTask method and update local state immediately."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import and render the TodoList component below the TodoInput component. Pass any necessary callbacks for state synchronization between input and list components."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "When a task is checked off, display it with normal styling (e.g., strikethrough or completed state)",
+      "acceptanceCriteria": [
+        "Checked tasks have visual indication of completion (such as strikethrough)",
+        "No special alerts or popups appear when checking a task"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/TodoList.tsx",
+          "operation": "modify",
+          "description": "Apply conditional styling to task text based on checked state. When checked is true, add line-through text decoration using Tailwind classes. Ensure no popup or alert appears when checking a task."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "When a task is unchecked, immediately change the task text color to red",
+      "acceptanceCriteria": [
+        "Unchecking a previously checked task changes its text to red",
+        "Red text persists until the task is checked again"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/TodoList.tsx",
+          "operation": "modify",
+          "description": "Track whether each task was previously checked before being unchecked. When a task transitions from checked to unchecked, apply red text color using Tailwind classes (text-red-600 or similar). Remove red color when the task is checked again."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "When a task is unchecked, display a popup modal with a randomly generated passive-aggressive insult about the user's work ethic",
+      "acceptanceCriteria": [
+        "Popup appears immediately when a task is unchecked",
+        "Popup contains a passive-aggressive message related to work ethic",
+        "Message is randomly selected from a collection of different insults",
+        "Popup can be dismissed by the user"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/PassiveAggressiveModal.tsx",
+          "operation": "create",
+          "description": "Create a modal component using Shadcn UI Dialog that displays a randomly selected passive-aggressive message about work ethic. Include at least 10 different messages in an array and select one randomly when the modal opens. Provide a close button or dismissal mechanism. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/TodoList.tsx",
+          "operation": "modify",
+          "description": "Import and integrate the PassiveAggressiveModal component. When a task is unchecked (transitions from checked to unchecked), trigger the modal to open. Pass necessary props to control modal visibility and message selection."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Apply a creative, coherent visual theme to the todo list interface with a distinct style including color palette, typography, and layout that is consistently enforced throughout",
+      "acceptanceCriteria": [
+        "Interface uses a cohesive color scheme (excluding blue and purple unless contextually appropriate)",
+        "Typography choices are consistent and readable",
+        "Layout is clean and visually appealing with good spacing"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define a cohesive color palette using CSS custom properties that avoids blue and purple. Choose warm, creative tones (such as earth tones, greens, or oranges). Apply consistent typography using font-family declarations and ensure readable font sizes."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend the Tailwind theme with custom colors that align with the chosen palette. Configure spacing, border radius, and other design tokens to create a cohesive visual style throughout the application."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Apply layout styling using Tailwind utility classes to create clean spacing, centered content, and a visually appealing container for the todo list components. Ensure consistent padding and margins throughout."
+        }
+      ]
+    }
+  ]
+}
