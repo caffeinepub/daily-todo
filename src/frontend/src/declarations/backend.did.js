@@ -15,6 +15,7 @@ export const idlService = IDL.Service({
   'getAllTasks' : IDL.Func([], [IDL.Vec(Task)], ['query']),
   'removeTask' : IDL.Func([IDL.Text], [], []),
   'toggleTask' : IDL.Func([IDL.Text], [], []),
+  'updateTaskText' : IDL.Func([IDL.Text, IDL.Text], [], []),
 });
 
 export const idlInitArgs = [];
@@ -27,6 +28,7 @@ export const idlFactory = ({ IDL }) => {
     'getAllTasks' : IDL.Func([], [IDL.Vec(Task)], ['query']),
     'removeTask' : IDL.Func([IDL.Text], [], []),
     'toggleTask' : IDL.Func([IDL.Text], [], []),
+    'updateTaskText' : IDL.Func([IDL.Text, IDL.Text], [], []),
   });
 };
 

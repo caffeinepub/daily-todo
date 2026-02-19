@@ -16,6 +16,7 @@ export interface _SERVICE {
   'getAllTasks' : ActorMethod<[], Array<Task>>,
   'removeTask' : ActorMethod<[string], undefined>,
   'toggleTask' : ActorMethod<[string], undefined>,
+  'updateTaskText' : ActorMethod<[string, string], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

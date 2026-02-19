@@ -31,6 +31,17 @@ actor {
     };
   };
 
+  public shared ({ caller }) func updateTaskText(oldText : Text, newText : Text) : async () {
+    switch (tasks.get(oldText)) {
+      case (null) { Runtime.trap("No such task found") };
+      case (?task) {
+        let updatedTask : Task = { task with text = newText };
+        tasks.remove(oldText);
+        tasks.add(newText, updatedTask);
+      };
+    };
+  };
+
   public query ({ caller }) func getAllTasks() : async [Task] {
     tasks.values().toArray();
   };

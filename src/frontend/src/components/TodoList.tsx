@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useGetAllTasks, useToggleTask } from '../hooks/useQueries';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useGetAllTasks, useToggleTask, useUpdateTaskText } from '../hooks/useQueries';
 import { PassiveAggressiveModal } from './PassiveAggressiveModal';
+import { Pencil, Check, X } from 'lucide-react';
 import type { Task } from '../backend';
 
 export function TodoList() {
   const { data: tasks, isLoading } = useGetAllTasks();
   const toggleTask = useToggleTask();
+  const updateTaskText = useUpdateTaskText();
   const [uncheckedTasks, setUncheckedTasks] = useState<Set<string>>(new Set());
   const [showModal, setShowModal] = useState(false);
   const [previousStates, setPreviousStates] = useState<Map<string, boolean>>(new Map());
+  const [editingTaskText, setEditingTaskText] = useState<string | null>(null);
+  const [editText, setEditText] = useState('');
 
   // Track previous states
   useEffect(() => {
@@ -42,6 +48,41 @@ export function TodoList() {
     toggleTask.mutate(task.text);
   };
 
+  const startEditing = (task: Task) => {
+    setEditingTaskText(task.text);
+    setEditText(task.text);
+  };
+
+  const cancelEditing = () => {
+    setEditingTaskText(null);
+    setEditText('');
+  };
+
+  const saveEdit = (oldText: string) => {
+    const trimmedText = editText.trim();
+    if (trimmedText && trimmedText !== oldText) {
+      updateTaskText.mutate(
+        { oldText, newText: trimmedText },
+        {
+          onSuccess: () => {
+            setEditingTaskText(null);
+            setEditText('');
+          },
+        }
+      );
+    } else {
+      cancelEditing();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, oldText: string) => {
+    if (e.key === 'Enter') {
+      saveEdit(oldText);
+    } else if (e.key === 'Escape') {
+      cancelEditing();
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="space-y-3">
@@ -68,28 +109,78 @@ export function TodoList() {
       <div className="space-y-2">
         {tasks.map((task) => {
           const isUnchecked = uncheckedTasks.has(task.text);
+          const isEditing = editingTaskText === task.text;
+
           return (
             <div
               key={task.text}
-              className="flex items-center gap-3 p-4 bg-card rounded-lg border border-border hover:border-accent transition-colors"
+              className={`flex items-center gap-3 p-4 bg-card rounded-lg border transition-colors ${
+                isEditing
+                  ? 'border-primary ring-2 ring-primary/20'
+                  : 'border-border hover:border-accent'
+              }`}
             >
               <Checkbox
                 checked={task.checked}
                 onCheckedChange={() => handleToggle(task)}
-                disabled={toggleTask.isPending}
+                disabled={toggleTask.isPending || isEditing}
                 className="flex-shrink-0"
               />
-              <span
-                className={`flex-1 transition-all ${
-                  task.checked
-                    ? 'line-through text-muted-foreground'
-                    : isUnchecked
-                    ? 'text-destructive font-medium'
-                    : 'text-foreground'
-                }`}
-              >
-                {task.text}
-              </span>
+              
+              {isEditing ? (
+                <>
+                  <Input
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(e, task.text)}
+                    className="flex-1"
+                    autoFocus
+                    disabled={updateTaskText.isPending}
+                  />
+                  <div className="flex gap-1">
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => saveEdit(task.text)}
+                      disabled={updateTaskText.isPending}
+                      className="h-8 w-8 text-success hover:bg-success/10"
+                    >
+                      <Check className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={cancelEditing}
+                      disabled={updateTaskText.isPending}
+                      className="h-8 w-8 text-muted-foreground hover:bg-muted"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span
+                    className={`flex-1 transition-all ${
+                      task.checked
+                        ? 'line-through text-muted-foreground'
+                        : isUnchecked
+                        ? 'text-destructive font-medium'
+                        : 'text-foreground'
+                    }`}
+                  >
+                    {task.text}
+                  </span>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => startEditing(task)}
+                    className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                </>
+              )}
             </div>
           );
         })}

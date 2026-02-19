@@ -2,11 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-clean-daily-todo-list-interface-where-users-can-add-new-tasks-with-a-text-input-and-submit-button",
-      "featureTitle": "Create a clean daily todo list interface where users can add new tasks with a text input and submit button",
+      "featureId": "feature-add-a-dark-mode-toggle-button-in-the-application-header-that-allows-users-to-switch-between-light-and-dark-color-schemes",
+      "featureTitle": "Add a dark mode toggle button in the application header that allows users to switch between light and dark color schemes",
       "files": [
         "frontend/src/App.tsx",
-        "frontend/src/components/TodoInput.tsx"
+        "frontend/src/components/DarkModeToggle.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -16,16 +16,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-1"
+        "REQ-11"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-display-all-todo-items-in-a-list-with-checkboxes-where-each-item-shows-the-task-text-and-can-be-toggled-between-checked-and-unchecked-states",
-      "featureTitle": "Display all todo items in a list with checkboxes, where each item shows the task text and can be toggled between checked and unchecked states",
+      "featureId": "feature-store-the-user-s-dark-mode-preference-in-localstorage-so-it-persists-across-browser-sessions-and-is-applied-immediately-on-page-load",
+      "featureTitle": "Store the user's dark mode preference in localStorage so it persists across browser sessions and is applied immediately on page load",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/TodoList.tsx"
+        "frontend/index.html"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -35,82 +34,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-2"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-when-a-task-is-checked-off-display-it-with-normal-styling-e-g-strikethrough-or-completed-state",
-      "featureTitle": "When a task is checked off, display it with normal styling (e.g., strikethrough or completed state)",
-      "files": [
-        "frontend/src/components/TodoList.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-when-a-task-is-unchecked-immediately-change-the-task-text-color-to-red",
-      "featureTitle": "When a task is unchecked, immediately change the task text color to red",
-      "files": [
-        "frontend/src/components/TodoList.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-when-a-task-is-unchecked-display-a-popup-modal-with-a-randomly-generated-passive-aggressive-insult-about-the-user-s-work-ethic",
-      "featureTitle": "When a task is unchecked, display a popup modal with a randomly generated passive-aggressive insult about the user's work ethic",
-      "files": [
-        "frontend/src/components/PassiveAggressiveModal.tsx",
-        "frontend/src/components/TodoList.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-apply-a-creative-coherent-visual-theme-to-the-todo-list-interface-with-a-distinct-style-including-color-palette-typography-and-layout-that-is-consistently-enforced-throughout",
-      "featureTitle": "Apply a creative, coherent visual theme to the todo list interface with a distinct style including color palette, typography, and layout that is consistently enforced throughout",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-7"
+        "REQ-13"
       ],
       "confidence": "high"
     }

@@ -16,4 +16,5 @@ export interface backendInterface {
     getAllTasks(): Promise<Array<Task>>;
     removeTask(text: string): Promise<void>;
     toggleTask(text: string): Promise<void>;
+    updateTaskText(oldText: string, newText: string): Promise<void>;
 }

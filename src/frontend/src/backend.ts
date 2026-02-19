@@ -98,6 +98,7 @@ export interface backendInterface {
     getAllTasks(): Promise<Array<Task>>;
     removeTask(text: string): Promise<void>;
     toggleTask(text: string): Promise<void>;
+    updateTaskText(oldText: string, newText: string): Promise<void>;
 }
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
@@ -154,6 +155,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.toggleTask(arg0);
+            return result;
+        }
+    }
+    async updateTaskText(arg0: string, arg1: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateTaskText(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateTaskText(arg0, arg1);
             return result;
         }
     }

@@ -1,5 +1,6 @@
 import { TodoInput } from './components/TodoInput';
 import { TodoList } from './components/TodoList';
+import { DarkModeToggle } from './components/DarkModeToggle';
 import { CheckSquare } from 'lucide-react';
 
 function App() {
@@ -11,9 +12,12 @@ function App() {
     <div className="min-h-screen bg-background">
       <div className="container max-w-2xl mx-auto px-4 py-8">
         <header className="mb-8 text-center">
-          <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="flex items-center justify-center gap-3 mb-2 relative">
             <CheckSquare className="h-8 w-8 text-primary" />
             <h1 className="text-4xl font-bold text-foreground">Daily Todo</h1>
+            <div className="absolute right-0">
+              <DarkModeToggle />
+            </div>
           </div>
           <p className="text-muted-foreground">
             Stay organized, one task at a time

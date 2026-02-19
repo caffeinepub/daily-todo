@@ -1,14 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Build a daily todo list application with passive-aggressive behavior when tasks are unchecked.
+**Goal:** Add a dark mode toggle to reduce eye strain while using the application.
 
 **Planned changes:**
-- Create a clean todo list interface with text input and submit functionality
-- Display todos with checkboxes that can be toggled between checked and unchecked states
-- Show checked tasks with strikethrough styling
-- Turn unchecked task text red and display a popup with a randomly generated passive-aggressive insult about work ethic
-- Persist todos and their states in the backend across sessions
-- Apply a creative, coherent visual theme with consistent color palette, typography, and layout
+- Add a toggle button in the application header to switch between light and dark modes
+- Apply dark mode styling using the existing OKLCH color variables by adding a 'dark' class to the html/body element
+- Store the user's dark mode preference in localStorage to persist across sessions
+- Ensure the selected mode is applied immediately on page load without visual flashing
 
-**User-visible outcome:** Users can add and manage daily tasks with checkboxes. Checking tasks marks them complete with strikethrough. Unchecking tasks turns the text red and triggers a passive-aggressive popup message about their work ethic. All tasks persist between sessions.
+**User-visible outcome:** Users can toggle between light and dark color schemes using a button in the header, and their preference will be remembered across browser sessions.

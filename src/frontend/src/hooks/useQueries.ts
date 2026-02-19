@@ -44,3 +44,18 @@ export function useToggleTask() {
     },
   });
 }
+
+export function useUpdateTaskText() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ oldText, newText }: { oldText: string; newText: string }) => {
+      if (!actor) throw new Error('Actor not initialized');
+      await actor.updateTaskText(oldText, newText);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    },
+  });
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 7,
   "summary": "Daily todo list app with passive-aggressive unchecking behavior",
   "architectural_notes": [],
   "known_issues": [],
@@ -53,6 +53,38 @@
         "REQ-7"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-an-edit-button-or-inline-edit-trigger-for-each-task-in-the-todolist-component-that-allows-users-to-modify-the-task-text",
+      "title": "Add an edit button or inline edit trigger for each task in the TodoList component that allows users to modify the task text",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-react-query-mutation-hook-in-usequeries-ts-for-updating-task-text-that-calls-the-backend-update-function",
+      "title": "Create a React Query mutation hook in useQueries.ts for updating task text that calls the backend update function",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-dark-mode-toggle-button-in-the-application-header-that-allows-users-to-switch-between-light-and-dark-color-schemes",
+      "title": "Add a dark mode toggle button in the application header that allows users to switch between light and dark color schemes",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-store-the-user-s-dark-mode-preference-in-localstorage-so-it-persists-across-browser-sessions-and-is-applied-immediately-on-page-load",
+      "title": "Store the user's dark mode preference in localStorage so it persists across browser sessions and is applied immediately on page load",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -85,6 +117,34 @@
       "summary": "Store the list of todos and their checked/unchecked states in the backend so they persist across sessions",
       "reqIds": [
         "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Add ability to edit task text to fix typos or update content",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Update the backend main.mo actor to include a function that updates the text of an existing task by its ID",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add dark mode to reduce eye strain",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Implement dark mode styling by applying the 'dark' class to the html or body element and ensuring all components respect the existing dark mode OKLCH color variables defined in index.css",
+      "reqIds": [
+        "REQ-12"
       ],
       "status": "pending"
     }

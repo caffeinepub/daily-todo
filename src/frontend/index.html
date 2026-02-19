@@ -3,6 +3,15 @@
         <meta charset='UTF-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
         <title>Daily Todo</title>
+        <script>
+            // Prevent flash of unstyled content by applying dark mode before React loads
+            (function() {
+                const darkMode = localStorage.getItem('darkMode');
+                if (darkMode === 'true') {
+                    document.documentElement.classList.add('dark');
+                }
+            })();
+        </script>
     </head>
     <body>
         <div id='root'></div>

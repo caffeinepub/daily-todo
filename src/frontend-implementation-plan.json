@@ -1,125 +1,87 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Daily Todo List with Passive-Aggressive Unchecking Behavior",
+  "title": "Add dark mode toggle to reduce eye strain",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Create a clean daily todo list interface where users can add new tasks with a text input and submit button",
+      "id": "REQ-11",
+      "summary": "Add a dark mode toggle button in the application header that allows users to switch between light and dark color schemes",
       "acceptanceCriteria": [
-        "Interface displays an input field for adding new tasks",
-        "Interface includes a button or enter key functionality to submit tasks",
-        "Visual design is clean and uncluttered"
+        "A toggle button is visible in the application header",
+        "Clicking the toggle switches between light and dark modes",
+        "The selected mode persists across page refreshes",
+        "The toggle button icon or label clearly indicates the current mode"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/TodoInput.tsx",
+          "path": "frontend/src/hooks/useDarkMode.ts",
           "operation": "create",
-          "description": "Create a component that renders a text input field and submit button for adding new tasks. Support both button click and Enter key submission. Use Shadcn UI Input and Button components. On submit, call the backend addTask method and clear the input field."
+          "description": "Create a custom React hook that manages dark mode state, reads and writes the preference to localStorage, and applies the 'dark' class to the document element. The hook should return the current dark mode state and a toggle function."
+        },
+        {
+          "path": "frontend/src/components/DarkModeToggle.tsx",
+          "operation": "create",
+          "description": "Create a toggle button component that uses the useDarkMode hook to display the current mode and allow users to switch between light and dark modes. The button should show appropriate icons or labels indicating the current mode (e.g., sun icon for light mode, moon icon for dark mode)."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Import and render the TodoInput component within the main application layout. Position it at the top of the todo list interface."
+          "description": "Import and add the DarkModeToggle component to the application header section, positioning it appropriately near the title 'Daily Todo' so it's visible and accessible to users."
         }
       ]
     },
     {
-      "id": "REQ-2",
-      "summary": "Display all todo items in a list with checkboxes, where each item shows the task text and can be toggled between checked and unchecked states",
+      "id": "REQ-12",
+      "summary": "Implement dark mode styling by applying the 'dark' class to the html or body element and ensuring all components respect the existing dark mode OKLCH color variables defined in index.css",
       "acceptanceCriteria": [
-        "Each task displays with a checkbox",
-        "Tasks can be checked and unchecked by clicking the checkbox",
-        "List updates immediately when tasks are toggled"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/TodoList.tsx",
-          "operation": "create",
-          "description": "Create a component that fetches all tasks from the backend using getAllTasks on mount and renders them in a list. Each task displays with a Shadcn UI Checkbox component and the task text. Wire checkbox onChange events to call the backend toggleTask method and update local state immediately."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Import and render the TodoList component below the TodoInput component. Pass any necessary callbacks for state synchronization between input and list components."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "When a task is checked off, display it with normal styling (e.g., strikethrough or completed state)",
-      "acceptanceCriteria": [
-        "Checked tasks have visual indication of completion (such as strikethrough)",
-        "No special alerts or popups appear when checking a task"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/TodoList.tsx",
-          "operation": "modify",
-          "description": "Apply conditional styling to task text based on checked state. When checked is true, add line-through text decoration using Tailwind classes. Ensure no popup or alert appears when checking a task."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "When a task is unchecked, immediately change the task text color to red",
-      "acceptanceCriteria": [
-        "Unchecking a previously checked task changes its text to red",
-        "Red text persists until the task is checked again"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/TodoList.tsx",
-          "operation": "modify",
-          "description": "Track whether each task was previously checked before being unchecked. When a task transitions from checked to unchecked, apply red text color using Tailwind classes (text-red-600 or similar). Remove red color when the task is checked again."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "When a task is unchecked, display a popup modal with a randomly generated passive-aggressive insult about the user's work ethic",
-      "acceptanceCriteria": [
-        "Popup appears immediately when a task is unchecked",
-        "Popup contains a passive-aggressive message related to work ethic",
-        "Message is randomly selected from a collection of different insults",
-        "Popup can be dismissed by the user"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/PassiveAggressiveModal.tsx",
-          "operation": "create",
-          "description": "Create a modal component using Shadcn UI Dialog that displays a randomly selected passive-aggressive message about work ethic. Include at least 10 different messages in an array and select one randomly when the modal opens. Provide a close button or dismissal mechanism. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/TodoList.tsx",
-          "operation": "modify",
-          "description": "Import and integrate the PassiveAggressiveModal component. When a task is unchecked (transitions from checked to unchecked), trigger the modal to open. Pass necessary props to control modal visibility and message selection."
-        }
-      ]
-    },
-    {
-      "id": "REQ-7",
-      "summary": "Apply a creative, coherent visual theme to the todo list interface with a distinct style including color palette, typography, and layout that is consistently enforced throughout",
-      "acceptanceCriteria": [
-        "Interface uses a cohesive color scheme (excluding blue and purple unless contextually appropriate)",
-        "Typography choices are consistent and readable",
-        "Layout is clean and visually appealing with good spacing"
+        "Dark mode uses the warm earth-toned color palette already defined in the CSS variables",
+        "All text remains readable with appropriate contrast in dark mode",
+        "Background colors, borders, and shadows adapt to dark mode",
+        "The PassiveAggressiveModal dialog styling works correctly in both modes",
+        "Task checkboxes, edit buttons, and input fields are properly styled in dark mode"
       ],
       "file_operations": [
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Define a cohesive color palette using CSS custom properties that avoids blue and purple. Choose warm, creative tones (such as earth tones, greens, or oranges). Apply consistent typography using font-family declarations and ensure readable font sizes."
+          "description": "Ensure the existing dark mode CSS variables are properly scoped under the .dark class selector and verify that all components use these variables correctly. Add any missing dark mode utility classes or adjust existing styles to ensure proper contrast and readability in dark mode."
         },
         {
-          "path": "frontend/tailwind.config.js",
+          "path": "frontend/src/components/TodoList.tsx",
           "operation": "modify",
-          "description": "Extend the Tailwind theme with custom colors that align with the chosen palette. Configure spacing, border radius, and other design tokens to create a cohesive visual style throughout the application."
+          "description": "Review and update component styling to ensure task checkboxes, edit buttons, inline edit controls, and text inputs properly respond to dark mode by using the existing CSS variables. Verify that borders, backgrounds, and hover states work correctly in both light and dark modes."
         },
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/components/TodoInput.tsx",
           "operation": "modify",
-          "description": "Apply layout styling using Tailwind utility classes to create clean spacing, centered content, and a visually appealing container for the todo list components. Ensure consistent padding and margins throughout."
+          "description": "Review and update the input field and submit button styling to ensure they properly adapt to dark mode using the existing OKLCH color variables, maintaining appropriate contrast and visual feedback in both modes."
+        },
+        {
+          "path": "frontend/src/components/PassiveAggressiveModal.tsx",
+          "operation": "modify",
+          "description": "Review and update the modal dialog styling to ensure proper rendering in dark mode, including dialog background, text color, borders, and the close button. Verify that the modal content remains readable with appropriate contrast in both light and dark modes."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Store the user's dark mode preference in localStorage so it persists across browser sessions and is applied immediately on page load",
+      "acceptanceCriteria": [
+        "The dark mode preference is saved to localStorage when toggled",
+        "On page load, the saved preference is read and applied before rendering",
+        "If no preference exists, default to light mode",
+        "No flash of unstyled content occurs when loading in dark mode"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useDarkMode.ts",
+          "operation": "modify",
+          "description": "Implement localStorage integration within the useDarkMode hook to save the preference when toggled and read it on initialization. Use a useEffect hook to apply the 'dark' class to the document element based on the saved preference, defaulting to light mode if no preference exists."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Add an inline script in the HTML head that reads the dark mode preference from localStorage and immediately applies the 'dark' class to the html element before React hydration. This prevents any flash of unstyled content when loading the page in dark mode."
         }
       ]
     }
