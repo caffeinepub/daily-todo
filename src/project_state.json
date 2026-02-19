@@ -1,10 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 7,
+  "projectStateVersion": 11,
   "summary": "Daily todo list app with passive-aggressive unchecking behavior",
   "architectural_notes": [],
-  "known_issues": [],
-  "isFixRequest": false,
+  "known_issues": [
+    "Cannot add new tasks to the todo list (add functionality broken)",
+    "Todo items do not persist across page refreshes (backend persistence not working)"
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-clean-daily-todo-list-interface-where-users-can-add-new-tasks-with-a-text-input-and-submit-button",
@@ -85,6 +88,38 @@
         "REQ-13"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-when-a-user-deletes-a-task-without-checking-it-off-first-display-a-passive-aggressive-modal-roast-about-deleting-incomplete-tasks",
+      "title": "When a user deletes a task without checking it off first, display a passive-aggressive modal roast about deleting incomplete tasks",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-when-a-user-adds-a-new-task-and-immediately-checks-it-off-without-delay-display-a-passive-aggressive-modal-roast-questioning-whether-they-actually-did-the-task",
+      "title": "When a user adds a new task and immediately checks it off without delay, display a passive-aggressive modal roast questioning whether they actually did the task",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-debug-and-fix-the-task-addition-functionality-in-the-todoinput-component-so-users-can-successfully-add-new-tasks-to-the-todo-list",
+      "title": "Debug and fix the task addition functionality in the TodoInput component so users can successfully add new tasks to the todo list",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-the-frontend-correctly-loads-persisted-tasks-on-initial-page-load-by-calling-getalltasks-and-rendering-them-in-the-todolist-component",
+      "title": "Verify that the frontend correctly loads persisted tasks on initial page load by calling getAllTasks and rendering them in the TodoList component",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -145,6 +180,42 @@
       "summary": "Implement dark mode styling by applying the 'dark' class to the html or body element and ensuring all components respect the existing dark mode OKLCH color variables defined in index.css",
       "reqIds": [
         "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Show passive-aggressive roast when user deletes a task without checking it off first",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Show passive-aggressive roast when user adds a task and immediately checks it off (questioning if they actually did it)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Ensure the dark mode preference persists across browser sessions by verifying localStorage is correctly saving and loading the user's theme selection",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Implement backend persistence for todo items so that all tasks and their checked/unchecked states are stored in stable memory and survive canister upgrades",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Create a migration.mo file to safely upgrade the backend state from the current Map-based storage to stable storage without data loss",
+      "reqIds": [
+        "REQ-19"
       ],
       "status": "pending"
     }

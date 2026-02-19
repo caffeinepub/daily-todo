@@ -1,11 +1,12 @@
 {
-  "frontend/src/hooks/useQueries.ts": "React Query hooks for fetching all tasks, adding new tasks, toggling task completion status, and updating task text with automatic cache invalidation.",
-  "frontend/src/components/TodoInput.tsx": "Input component with form submission that allows users to add new tasks via text input or Enter key, with loading state during submission.",
-  "frontend/src/components/TodoList.tsx": "Main list component that displays all tasks with checkboxes, edit mode with inline text editing, save/cancel controls, and triggers the passive-aggressive modal when tasks are unchecked.",
-  "frontend/src/components/PassiveAggressiveModal.tsx": "Dialog modal that displays a randomly selected passive-aggressive message from a collection of 15 insults about work ethic when a task is unchecked.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations with enhanced error handling, console logging for debugging, and proper cache invalidation to ensure tasks persist and refresh correctly.",
+  "frontend/src/components/TodoInput.tsx": "Input form component that adds new tasks using async/await pattern with improved error handling to ensure tasks are successfully added to the backend before clearing the input field.",
+  "frontend/src/components/TodoList.tsx": "Main task list component with checkboxes, edit mode, delete buttons, passive-aggressive modals, error state handling, and async operations to ensure proper task state management and persistence.",
+  "frontend/src/components/PassiveAggressiveModal.tsx": "Dialog modal with three variants (uncheck, delete-unchecked, instant-check) that displays randomly selected passive-aggressive messages based on user behavior.",
   "frontend/src/App.tsx": "Main application component that renders the todo list interface with header (including dark mode toggle), input section, task list, and footer with attribution link.",
   "frontend/src/index.css": "Global styles with warm earth-tone OKLCH color system for both light and dark modes, avoiding blue and purple tones.",
   "frontend/tailwind.config.js": "Tailwind configuration extended with custom earth-tone colors, Inter font family, and enhanced shadow utilities for a cohesive warm design system.",
   "frontend/src/components/DarkModeToggle.tsx": "Toggle button component that switches between light and dark modes using localStorage persistence and displays sun/moon icons to indicate the current theme state.",
-  "frontend/index.html": "HTML entry point with inline script that applies dark mode class before React hydration to prevent flash of unstyled content."
+  "frontend/index.html": "HTML entry point with inline script that applies dark mode class before React hydration to prevent flash of unstyled content.",
+  "frontend/src/hooks/useTaskTimestamps.ts": "Zustand store that tracks task creation timestamps to detect instant check-offs within 5 seconds of creation, providing functions to record, check, and clear timestamps."
 }

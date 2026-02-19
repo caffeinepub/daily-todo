@@ -1,16 +1,40 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-19T22:21:13.806Z",
-  "summary": "The diff implements all three requirements for dark mode functionality. A DarkModeToggle component was added with localStorage persistence, the toggle was integrated into the App header, and an inline script was added to index.html to prevent FOUC. The implementation correctly applies the 'dark' class to document.documentElement and respects the existing OKLCH color variables.",
+  "generatedAt": "2026-02-19T22:31:14.425Z",
+  "summary": "The implementation successfully addresses all four requirements (REQ-17 through REQ-20). The frontend task addition functionality has been fixed with proper async/await error handling in TodoInput.tsx. Backend persistence is implemented using List-based stable storage in main.mo with a migration.mo file for safe upgrades. The frontend correctly loads persisted tasks via useGetAllTasks with proper query configuration (staleTime: 0, refetchOnMount: true). All acceptance criteria appear to be met based on the code changes.",
   "missing_requirements": [],
-  "hallucinated_features": [],
-  "confidence": 0.95,
+  "hallucinated_features": [
+    {
+      "description": "Enhanced console logging for debugging across multiple query hooks",
+      "reason": "The diff shows extensive console.error statements added throughout useQueries.ts (e.g., 'Error fetching tasks:', 'Error adding task:', 'Error toggling task:', etc.). While helpful for debugging, this level of logging was not requested in the BuildRequest.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "description": "Spinner animation during task addition",
+      "reason": "TodoInput.tsx includes a spinning emoji animation when addTask.isPending is true. The BuildRequest only asked to fix task addition functionality, not to add loading UI indicators.",
+      "evidence": [
+        "frontend/src/components/TodoInput.tsx"
+      ]
+    },
+    {
+      "description": "Input field remains populated on error",
+      "reason": "The error handling in TodoInput.tsx includes a comment 'Keep the text in the input so user can try again', implementing retry UX that was not specified in requirements.",
+      "evidence": [
+        "frontend/src/components/TodoInput.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.85,
   "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
-    "frontend/src/components/DarkModeToggle.tsx",
+    "frontend/src/components/TodoInput.tsx",
+    "frontend/src/components/TodoList.tsx",
+    "frontend/src/hooks/useQueries.ts",
     "project_state.json"
   ]
 }

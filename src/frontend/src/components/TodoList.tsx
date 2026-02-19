@@ -2,20 +2,28 @@ import { useState, useEffect } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useGetAllTasks, useToggleTask, useUpdateTaskText } from '../hooks/useQueries';
+import { useGetAllTasks, useToggleTask, useUpdateTaskText, useRemoveTask } from '../hooks/useQueries';
 import { PassiveAggressiveModal } from './PassiveAggressiveModal';
-import { Pencil, Check, X } from 'lucide-react';
+import { Pencil, Check, X, Trash2 } from 'lucide-react';
 import type { Task } from '../backend';
+import { useTaskTimestamps } from '../hooks/useTaskTimestamps';
+
+type ModalVariant = 'uncheck' | 'delete-unchecked' | 'instant-check';
 
 export function TodoList() {
-  const { data: tasks, isLoading } = useGetAllTasks();
+  const { data: tasks, isLoading, error } = useGetAllTasks();
   const toggleTask = useToggleTask();
   const updateTaskText = useUpdateTaskText();
+  const removeTask = useRemoveTask();
+  const { checkIfInstantCheck, clearTimestamp } = useTaskTimestamps();
+  
   const [uncheckedTasks, setUncheckedTasks] = useState<Set<string>>(new Set());
   const [showModal, setShowModal] = useState(false);
+  const [modalVariant, setModalVariant] = useState<ModalVariant>('uncheck');
   const [previousStates, setPreviousStates] = useState<Map<string, boolean>>(new Map());
   const [editingTaskText, setEditingTaskText] = useState<string | null>(null);
   const [editText, setEditText] = useState('');
+  const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
 
   // Track previous states
   useEffect(() => {
@@ -28,15 +36,23 @@ export function TodoList() {
     }
   }, [tasks]);
 
-  const handleToggle = (task: Task) => {
+  const handleToggle = async (task: Task) => {
     const wasChecked = previousStates.get(task.text) || false;
     const willBeChecked = !task.checked;
 
     // If task was checked and is being unchecked
     if (wasChecked && !willBeChecked) {
       setUncheckedTasks((prev) => new Set(prev).add(task.text));
+      setModalVariant('uncheck');
       setShowModal(true);
     } else if (!wasChecked && willBeChecked) {
+      // Check if this is an instant check-off
+      if (checkIfInstantCheck(task.text)) {
+        setModalVariant('instant-check');
+        setShowModal(true);
+        clearTimestamp(task.text);
+      }
+      
       // Remove from unchecked set when checking again
       setUncheckedTasks((prev) => {
         const newSet = new Set(prev);
@@ -45,7 +61,35 @@ export function TodoList() {
       });
     }
 
-    toggleTask.mutate(task.text);
+    try {
+      await toggleTask.mutateAsync(task.text);
+    } catch (error) {
+      console.error('Failed to toggle task:', error);
+    }
+  };
+
+  const handleDelete = (task: Task) => {
+    // If task is unchecked, show roast modal
+    if (!task.checked) {
+      setTaskToDelete(task.text);
+      setModalVariant('delete-unchecked');
+      setShowModal(true);
+    } else {
+      // If task is checked, delete immediately
+      removeTask.mutate(task.text);
+      clearTimestamp(task.text);
+    }
+  };
+
+  const handleModalClose = (open: boolean) => {
+    setShowModal(open);
+    
+    // If closing after delete-unchecked modal, proceed with deletion
+    if (!open && taskToDelete && modalVariant === 'delete-unchecked') {
+      removeTask.mutate(taskToDelete);
+      clearTimestamp(taskToDelete);
+      setTaskToDelete(null);
+    }
   };
 
   const startEditing = (task: Task) => {
@@ -58,18 +102,16 @@ export function TodoList() {
     setEditText('');
   };
 
-  const saveEdit = (oldText: string) => {
+  const saveEdit = async (oldText: string) => {
     const trimmedText = editText.trim();
     if (trimmedText && trimmedText !== oldText) {
-      updateTaskText.mutate(
-        { oldText, newText: trimmedText },
-        {
-          onSuccess: () => {
-            setEditingTaskText(null);
-            setEditText('');
-          },
-        }
-      );
+      try {
+        await updateTaskText.mutateAsync({ oldText, newText: trimmedText });
+        setEditingTaskText(null);
+        setEditText('');
+      } catch (error) {
+        console.error('Failed to update task:', error);
+      }
     } else {
       cancelEditing();
     }
@@ -92,6 +134,14 @@ export function TodoList() {
             <div className="h-4 bg-muted rounded flex-1" />
           </div>
         ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-12 text-destructive">
+        <p className="text-lg">Failed to load tasks. Please refresh the page.</p>
       </div>
     );
   }
@@ -171,21 +221,36 @@ export function TodoList() {
                   >
                     {task.text}
                   </span>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={() => startEditing(task)}
-                    className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
+                  <div className="flex gap-1">
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => startEditing(task)}
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => handleDelete(task)}
+                      disabled={removeTask.isPending}
+                      className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </>
               )}
             </div>
           );
         })}
       </div>
-      <PassiveAggressiveModal open={showModal} onOpenChange={setShowModal} />
+      <PassiveAggressiveModal 
+        open={showModal} 
+        onOpenChange={handleModalClose}
+        variant={modalVariant}
+      />
     </>
   );
 }

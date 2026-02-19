@@ -9,9 +9,17 @@ export function useGetAllTasks() {
     queryKey: ['tasks'],
     queryFn: async () => {
       if (!actor) return [];
-      return actor.getAllTasks();
+      try {
+        const tasks = await actor.getAllTasks();
+        return tasks;
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+        return [];
+      }
     },
     enabled: !!actor && !isFetching,
+    staleTime: 0,
+    refetchOnMount: true,
   });
 }
 
@@ -22,7 +30,12 @@ export function useAddTask() {
   return useMutation({
     mutationFn: async (text: string) => {
       if (!actor) throw new Error('Actor not initialized');
-      await actor.addTask(text);
+      try {
+        await actor.addTask(text);
+      } catch (error) {
+        console.error('Error adding task:', error);
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
@@ -37,7 +50,12 @@ export function useToggleTask() {
   return useMutation({
     mutationFn: async (text: string) => {
       if (!actor) throw new Error('Actor not initialized');
-      await actor.toggleTask(text);
+      try {
+        await actor.toggleTask(text);
+      } catch (error) {
+        console.error('Error toggling task:', error);
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
@@ -52,7 +70,32 @@ export function useUpdateTaskText() {
   return useMutation({
     mutationFn: async ({ oldText, newText }: { oldText: string; newText: string }) => {
       if (!actor) throw new Error('Actor not initialized');
-      await actor.updateTaskText(oldText, newText);
+      try {
+        await actor.updateTaskText(oldText, newText);
+      } catch (error) {
+        console.error('Error updating task text:', error);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    },
+  });
+}
+
+export function useRemoveTask() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (text: string) => {
+      if (!actor) throw new Error('Actor not initialized');
+      try {
+        await actor.removeTask(text);
+      } catch (error) {
+        console.error('Error removing task:', error);
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });

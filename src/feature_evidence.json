@@ -2,11 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-dark-mode-toggle-button-in-the-application-header-that-allows-users-to-switch-between-light-and-dark-color-schemes",
-      "featureTitle": "Add a dark mode toggle button in the application header that allows users to switch between light and dark color schemes",
+      "featureId": "feature-debug-and-fix-the-task-addition-functionality-in-the-todoinput-component-so-users-can-successfully-add-new-tasks-to-the-todo-list",
+      "featureTitle": "Debug and fix the task addition functionality in the TodoInput component so users can successfully add new tasks to the todo list",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/DarkModeToggle.tsx"
+        "frontend/src/components/TodoInput.tsx",
+        "frontend/src/hooks/useQueries.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -16,15 +16,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-11"
+        "REQ-17"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-store-the-user-s-dark-mode-preference-in-localstorage-so-it-persists-across-browser-sessions-and-is-applied-immediately-on-page-load",
-      "featureTitle": "Store the user's dark mode preference in localStorage so it persists across browser sessions and is applied immediately on page load",
+      "featureId": "feature-verify-that-the-frontend-correctly-loads-persisted-tasks-on-initial-page-load-by-calling-getalltasks-and-rendering-them-in-the-todolist-component",
+      "featureTitle": "Verify that the frontend correctly loads persisted tasks on initial page load by calling getAllTasks and rendering them in the TodoList component",
       "files": [
-        "frontend/index.html"
+        "frontend/src/components/TodoList.tsx",
+        "frontend/src/hooks/useQueries.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -34,7 +35,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-13"
+        "REQ-20"
       ],
       "confidence": "high"
     }

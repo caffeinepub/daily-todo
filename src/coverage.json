@@ -1,63 +1,68 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-19T22:21:13.809Z",
+  "generatedAt": "2026-02-19T22:31:14.428Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
+    "total": 4,
     "implemented": 2,
     "items": [
       {
-        "id": "REQ-11",
-        "summary": "Add a dark mode toggle button in the application header that allows users to switch between light and dark color schemes",
+        "id": "REQ-17",
+        "summary": "Debug and fix the task addition functionality in the TodoInput component so users can successfully add new tasks to the todo list",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useDarkMode.ts",
-          "frontend/src/components/DarkModeToggle.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/components/TodoInput.tsx",
+          "frontend/src/hooks/useQueries.ts"
         ],
         "matchedFiles": [
-          "frontend/src/components/DarkModeToggle.tsx",
-          "frontend/src/App.tsx"
+          "frontend/src/components/TodoInput.tsx",
+          "frontend/src/hooks/useQueries.ts"
         ]
       },
       {
-        "id": "REQ-12",
-        "summary": "Implement dark mode styling by applying the 'dark' class to the html or body element and ensuring all components respect the existing dark mode OKLCH color variables defined in index.css",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/src/index.css",
-          "frontend/src/components/TodoList.tsx",
-          "frontend/src/components/TodoInput.tsx",
-          "frontend/src/components/PassiveAggressiveModal.tsx"
-        ],
+        "id": "REQ-18",
+        "summary": "Implement backend persistence for todo items so that all tasks and their checked/unchecked states are stored in stable memory and survive canister upgrades",
+        "status": "unknown",
+        "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-13",
-        "summary": "Store the user's dark mode preference in localStorage so it persists across browser sessions and is applied immediately on page load",
+        "id": "REQ-19",
+        "summary": "Create a migration.mo file to safely upgrade the backend state from the current Map-based storage to stable storage without data loss",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-20",
+        "summary": "Verify that the frontend correctly loads persisted tasks on initial page load by calling getAllTasks and rendering them in the TodoList component",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useDarkMode.ts",
-          "frontend/index.html"
+          "frontend/src/components/TodoList.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/index.html"
+          "frontend/src/components/TodoList.tsx",
+          "frontend/src/hooks/useQueries.ts"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/index.html",
-    "frontend/src/App.tsx",
-    "frontend/src/components/DarkModeToggle.tsx",
+    "frontend/src/components/TodoInput.tsx",
+    "frontend/src/components/TodoList.tsx",
+    "frontend/src/hooks/useQueries.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

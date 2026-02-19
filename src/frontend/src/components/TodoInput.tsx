@@ -3,19 +3,28 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useAddTask } from '../hooks/useQueries';
+import { useTaskTimestamps } from '../hooks/useTaskTimestamps';
 
 export function TodoInput() {
   const [text, setText] = useState('');
   const addTask = useAddTask();
+  const { recordTaskCreation } = useTaskTimestamps();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (text.trim()) {
-      addTask.mutate(text.trim(), {
-        onSuccess: () => {
-          setText('');
-        },
-      });
+    const trimmedText = text.trim();
+    
+    if (!trimmedText) {
+      return;
+    }
+
+    try {
+      await addTask.mutateAsync(trimmedText);
+      recordTaskCreation(trimmedText);
+      setText('');
+    } catch (error) {
+      console.error('Failed to add task:', error);
+      // Keep the text in the input so user can try again
     }
   };
 

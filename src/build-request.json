@@ -1,73 +1,90 @@
 {
   "kind": "build_request",
-  "title": "Add dark mode toggle to reduce eye strain",
-  "priority": "normal",
+  "title": "Fix task addition and implement backend persistence for todos",
+  "projectName": "Daily Todo",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-11",
-      "text": "Add a dark mode toggle button in the application header that allows users to switch between light and dark color schemes",
+      "id": "REQ-17",
+      "text": "Debug and fix the task addition functionality in the TodoInput component so users can successfully add new tasks to the todo list",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-dark-mode"
+          "msg-user-final"
         ],
         "quotes": [
-          "looks good, my eyes are burning can you add a dark mode?"
+          "can't add anything to the to do list now?"
         ]
       },
       "acceptanceCriteria": [
-        "A toggle button is visible in the application header",
-        "Clicking the toggle switches between light and dark modes",
-        "The selected mode persists across page refreshes",
-        "The toggle button icon or label clearly indicates the current mode"
+        "Users can type text into the input field and submit it",
+        "New tasks appear in the todo list immediately after submission",
+        "The input field clears after successful task addition",
+        "No console errors occur during task addition"
       ]
     },
     {
-      "id": "REQ-12",
-      "text": "Implement dark mode styling by applying the 'dark' class to the html or body element and ensuring all components respect the existing dark mode OKLCH color variables defined in index.css",
-      "target": "frontend",
+      "id": "REQ-18",
+      "text": "Implement backend persistence for todo items so that all tasks and their checked/unchecked states are stored in stable memory and survive canister upgrades",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-user-dark-mode"
+          "msg-user-final"
         ],
         "quotes": [
-          "looks good, my eyes are burning can you add a dark mode?"
+          "persist the todo items for refresh"
         ]
       },
       "acceptanceCriteria": [
-        "Dark mode uses the warm earth-toned color palette already defined in the CSS variables",
-        "All text remains readable with appropriate contrast in dark mode",
-        "Background colors, borders, and shadows adapt to dark mode",
-        "The PassiveAggressiveModal dialog styling works correctly in both modes",
-        "Task checkboxes, edit buttons, and input fields are properly styled in dark mode"
+        "Todo items persist across page refreshes",
+        "Task states (checked/unchecked) are preserved after refresh",
+        "Task text content remains unchanged after refresh",
+        "Data survives canister upgrades without loss"
       ]
     },
     {
-      "id": "REQ-13",
-      "text": "Store the user's dark mode preference in localStorage so it persists across browser sessions and is applied immediately on page load",
-      "target": "frontend",
+      "id": "REQ-19",
+      "text": "Create a migration.mo file to safely upgrade the backend state from the current Map-based storage to stable storage without data loss",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-user-dark-mode"
+          "msg-user-final"
         ]
       },
       "acceptanceCriteria": [
-        "The dark mode preference is saved to localStorage when toggled",
-        "On page load, the saved preference is read and applied before rendering",
-        "If no preference exists, default to light mode",
-        "No flash of unstyled content occurs when loading in dark mode"
+        "Existing tasks are migrated to stable storage",
+        "No data is lost during the upgrade process",
+        "The migration handles empty state gracefully"
+      ]
+    },
+    {
+      "id": "REQ-20",
+      "text": "Verify that the frontend correctly loads persisted tasks on initial page load by calling getAllTasks and rendering them in the TodoList component",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-final"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Tasks appear immediately when the page loads",
+        "Previously checked tasks display with checked state",
+        "Previously unchecked tasks display with unchecked state",
+        "Task order is preserved"
       ]
     }
   ],
   "constraints": [
-    "Use the existing OKLCH color variables already defined in frontend/index.css for dark mode",
-    "Do not modify the warm earth-toned color palette",
-    "Do not change backend files or data models"
+    "Maintain the existing single-actor architecture in backend/main.mo",
+    "Do not modify frontend/src/hooks/useInternetIdentity.ts or other immutable paths",
+    "Preserve all existing passive-aggressive modal functionality",
+    "Keep the current warm earth-tone color scheme"
   ],
   "nonGoals": [
-    "Creating additional color themes beyond light and dark",
-    "Adding system preference detection for automatic dark mode",
-    "Modifying the PassiveAggressiveModal content or behavior"
+    "Changing the visual design or color palette",
+    "Adding new passive-aggressive modal variants",
+    "Implementing task sorting or filtering features",
+    "Adding task categories or priorities"
   ],
   "imageRequirements": {
     "required": [],
